@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>지하철게임</title>
+    <link href="css/style.css" rel="stylesheet">
+    <script src="./js/main.js" defer></script>
+</head>
+<body>
+<div class="wrap">
+    <div class="main">
+        <h1><img src="./images/tit.png" alt="제목"/></h1>
+        <ul class="number_wrap">
+            <li><img src="./images/num1.png" alt="1"/></li>
+            <li><img src="./images/num2.png" alt="2"/></li>
+            <li><img src="./images/num3.png" alt="3"/></li>
+            <li><img src="./images/num4.png" alt="4"/></li>
+        </ul>
+
+        <div class="subway_wrap">
+            <ul class="subway">
+                <li><img src="./images/subway.jpg" alt="지하철"/></li>
+                <li><img src="./images/subway.jpg" alt="지하철"/></li>
+                <li><img src="./images/subway.jpg" alt="지하철"/></li>
+                <li><img src="./images/subway.jpg" alt="지하철"/></li>
+            </ul>
+        </div>
+
+        <ul class="btn_wrap">
+            <li>
+                <a href="javascript:void(0)" >
+                    <img class="btn" src="./images/btn_start.png" alt="시작버튼"/>
+                </a>
+                <img class="mice" src="./images/mice.png" alt="시골쥐"/>
+            </li>
+            <li>
+                <a href="javascript:void(0)" onclick="popupOpen();">
+                    <img class="btn" src="./images/btn_howto.png" alt="게임방법"/>
+                </a>
+                <img class="mice" src="./images/mice.png" alt="시골쥐"/>
+            </li>
+        </ul>
+    </div>
+
+</div>
+<div class="popup" id="popup">
+    <div class="bg" onclick="popupClose();"></div>
+    <div class="cont">
+        <a class="close" href="javascript:void(0);" onclick="popupClose();">x</a>
+        <p>
+            랜덤으로 나오는 지하철 호선에
+            <br/>정답을 입력해 주세요~
+            <br/>
+            <br/><span>*'역'을 제외하고 입력해주세요
+            <br/>예) 강남역 -> 강남</span>
+        </p>
+    </div>
+</div>
+
+</body>
+</html>
