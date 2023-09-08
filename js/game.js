@@ -1,25 +1,15 @@
-// var xhr = new XMLHttpRequest();
-// var url = 'http://openapi.seoul.go.kr:8088/747a62694f7279753132327063576747/xml/SearchSTNBySubwayLineInfo/1/100/%20/%20/1%ED%98%B8%EC%84%A0'; /* URL */
-
 const url = 'http://openapi.seoul.go.kr:8088/747a62694f7279753132327063576747/xml/SearchSTNBySubwayLineInfo/1/300/';
-const urlNum1 = 'http://openapi.seoul.go.kr:8088/747a62694f7279753132327063576747/xml/SearchSTNBySubwayLineInfo/1/500/%20/%20/1%ED%98%B8%EC%84%A0';
-const urlNum2 = 'http://openapi.seoul.go.kr:8088/747a62694f7279753132327063576747/xml/SearchSTNBySubwayLineInfo/1/500/%20/%20/2%ED%98%B8%EC%84%A0';
-const urlNum3 = 'http://openapi.seoul.go.kr:8088/747a62694f7279753132327063576747/xml/SearchSTNBySubwayLineInfo/1/500/%20/%20/3%ED%98%B8%EC%84%A0';
-
+// 역이름
 let subwayNM =[];
+// 노선 정보
 let subwayLine =[];
-let myAnswr =[];
-// 푼 문제 개수
-let myQuiz = 0;
-// 맞은 점수
-let myScore = 0;
+
 fetch(url)
     .then(response => response.text())
     .then(data => {
         var parser = new DOMParser();
         var xmlDoc = parser.parseFromString(data, 'text/xml');
         // getElementByTagName 메서드를 사용하여 원하는 태그 선택
-        console.log(xmlDoc);
         var nameTags = xmlDoc.getElementsByTagName('STATION_NM');
         var numTags = xmlDoc.getElementsByTagName('LINE_NUM');
 
@@ -34,6 +24,7 @@ fetch(url)
 
         randomQuiz();
         chkAnswr();
+        setInterval(timer, 1000);
 
 
     })
@@ -41,12 +32,26 @@ fetch(url)
         console.error('API 호출 중 오류 발생:', error);
     });
 
+
+// 맞은 정답 배열
+let myAnswr =[];
+// 푼 문제 개수
+let myQuiz = 0;
+// 맞은 점수
+let myScore = 0;
+// 타이머
+let timerNum = 6;
+
 const quizBg = document.querySelector('.quiz_area >div:first-of-type');
 const quizTit = document.querySelector('.quiz_area .quiz > p span');
 const quizBtn = document.getElementById('quiz_submit');
+const timerImg = document.getElementById('timer');
+
+// 랜덤노선 문제
 let randomLine = Math.floor(Math.random() * 4+1);
 let randomLineTxt = `${randomLine}호선`;
 
+// 퀴즈 랜덤 노출& class 추가, 삭제
 function randomQuiz() {
     randomLine = Math.floor(Math.random() * 4+1);
     randomLineTxt = `${randomLine}호선`;
@@ -64,10 +69,16 @@ function chkAnswr(){
         e.preventDefault();
         // 푼문제 카운트
         myQuiz+=1;
+        setTimeout(clearTime, 1000);
+        if(timerNum === 6){
+            setInterval(timer, 1000);
+        }
+
+
 
         let answr = document.getElementById('subwayName').value;
         let answrNum = subwayLine[subwayNM.indexOf(answr)];
-        const result = subwayNM.filter((item, idx) =>item == answr);
+        const result = subwayNM.filter((item) =>item == answr);
 
         // 전체 지하철 배열에 내가 입력한 역이 있을 때
         if(subwayNM.includes(answr)) {
@@ -94,7 +105,7 @@ function chkAnswr(){
 
                 // 배열에 존재하지만 답이 아님
             }else {
-                alert('틀렸습니다.');
+                scoring(2);
                 clearAnswr();
                 console.log('배열에 존재하지만 답이 아님');
                 console.log(result.length);
@@ -104,7 +115,7 @@ function chkAnswr(){
 
             // 배열 자체에 있지도 않음;;
         }else {
-            alert('틀렸습니다.');
+            scoring(2);
             clearAnswr();
             console.log('배열 자체에 있지도 않음;;');
         }
@@ -119,10 +130,10 @@ function chkAnswr(){
 // 정답일 때 처리(중복체크/스코어)
 function nextQuiz(answr){
     if(myAnswr.includes(answr)){
-        alert("중복입력");
+        scoring(3);
         return false;
     }
-    alert('맞았습니다.');
+    scoring(1);
     myAnswr.push(answr);
     myScore = myScore + 10;
 
@@ -141,6 +152,39 @@ function clearAnswr() {
     console.log(myScore);
 }
 
+// 타이머
+function timer() {
+    if(timerNum === 0){
+        clearTime();
+        location.replace(`result.html?score=${myScore}`);
+        timerNum=6;
+        return false;
+    }
+    timerNum-=1;
+    timerImg.src = `./images/timer_${timerNum}s.png`;
+    console.log(timerNum)
 
 
-//중복체크, 스코어, 시간초
+}
+
+function clearTime() {
+    clearInterval(timer);
+    timerNum=6;
+    timerImg.src = `./images/timer_${timerNum}s.png`;
+    
+}
+
+// 채점
+function scoring(scr) {
+    const scoringImg = document.getElementById('scoring');
+
+    scoringImg.src = `./images/scoring${scr}.png`;
+    scoringImg.style.display="block";
+    setTimeout(function () {
+        scoringImg.style.display="none";
+    }, 1000);
+}
+
+
+
+//시간초
