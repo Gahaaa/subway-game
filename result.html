@@ -9,23 +9,17 @@
 <div class="wrap">
     <div class="result">
         <div>
-            <img class="level_img" src="./images/level1.png" alt="level1"/>
-            <img class="level_img" style="display:none" src="./images/level2.png" alt="level2"/>
-            <img class="level_img" style="display:none" src="./images/level3.png" alt="level3"/>
+            <img id="level_img" class="level_img" src="./images/level1.png" alt="level1"/>
             <p class="score">
-                <strong><span>30</span>점</strong>
-                <span>미아가 되었군요.<br/>역무원을 찾아가세요.</span>
-                <span style="display:none">거의 다 왔어요.<br/>노선도를 유심히 보세요.</span>
-                <span style="display:none">원하는 역에 도착했어요.<br/>서울쥐가 다 됐군요</span>
+                <strong><span id="my_score"></span>점</strong>
+                <span id="result_txt"></span>
             </p>
         </div>
-        <a class="retry_btn" href="javascript:void(0);"><img class="level_img" src="./images/retry_btn.png" alt="다시하기"/></a>
+        <a class="retry_btn" href="javascript:void(0);" onclick="window.location.replace('main.html');">
+            <img class="level_img" src="./images/retry_btn.png" alt="다시하기"/>
+        </a>
     </div>
-
 </div>
-<script>
-
-</script>
-
 </body>
+<script src="./js/result.js" defer></script>
 </html>

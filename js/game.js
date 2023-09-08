@@ -19,6 +19,7 @@ fetch(url)
         var parser = new DOMParser();
         var xmlDoc = parser.parseFromString(data, 'text/xml');
         // getElementByTagName 메서드를 사용하여 원하는 태그 선택
+        console.log(xmlDoc);
         var nameTags = xmlDoc.getElementsByTagName('STATION_NM');
         var numTags = xmlDoc.getElementsByTagName('LINE_NUM');
 
@@ -130,6 +131,8 @@ function nextQuiz(answr){
 function clearAnswr() {
     if(myQuiz === 10){
         alert('퀴즈 끝!');
+        location.replace(`result.html?score=${myScore}`);
+        // window.location.replace('main.html');
 
     }
     randomQuiz();
