@@ -40,7 +40,7 @@ let myQuiz = 0;
 // 맞은 점수
 let myScore = 0;
 // 타이머
-let timerNum = 6;
+let timerNum = 10;
 
 const quizBg = document.querySelector('.quiz_area >div:first-of-type');
 const quizTit = document.querySelector('.quiz_area .quiz > p span');
@@ -69,16 +69,22 @@ function chkAnswr(){
         e.preventDefault();
         // 푼문제 카운트
         myQuiz+=1;
+
+        // 문제풀시 타이머 초기화
         setTimeout(clearTime, 1000);
         if(timerNum === 6){
             setInterval(timer, 1000);
         }
 
-
-
+        // 답 입력값
         let answr = document.getElementById('subwayName').value;
+        if(answr === "서울") {
+            answr = "서울역";
+        }
+
         let answrNum = subwayLine[subwayNM.indexOf(answr)];
-        const result = subwayNM.filter((item) =>item == answr);
+        // 중복호선(환승역)확인
+        const result = subwayNM.filter((item) =>item === answr);
 
         // 전체 지하철 배열에 내가 입력한 역이 있을 때
         if(subwayNM.includes(answr)) {
@@ -157,7 +163,7 @@ function timer() {
     if(timerNum === 0){
         clearTime();
         location.replace(`result.html?score=${myScore}`);
-        timerNum=6;
+        timerNum=10;
         return false;
     }
     timerNum-=1;
@@ -167,9 +173,10 @@ function timer() {
 
 }
 
+// 타이머 초기화
 function clearTime() {
     clearInterval(timer);
-    timerNum=6;
+    timerNum=10;
     timerImg.src = `./images/timer_${timerNum}s.png`;
     
 }
@@ -185,6 +192,19 @@ function scoring(scr) {
     }, 1000);
 }
 
+// 새로고침 방지
+function NotReload() {
+    if((event.ctrlKey == true && (event.keyCode == 78 || event.keyCode == 82)) || (event.keyCode == 116) ) {
+        event.keyCode = 0;
+        event.cancelBubble = true;
+        event.returnValue = false;
+    }
+}
+document.onkeydown = NotReload;
 
-
-//시간초
+window.addEventListener('beforeunload', (event) => {
+    // 표준에 따라 기본 동작 방지
+    event.preventDefault();
+    // Chrome에서는 returnValue 설정이 필요함
+    event.returnValue = '';
+});
