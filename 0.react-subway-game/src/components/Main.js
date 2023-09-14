@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import './style.css';
 
-// const popUp = document.querySelector('#popup');
 function popupOpen() {
     document.querySelector('#popup').style.display='block';
 
@@ -49,10 +48,14 @@ const Main = () => {
                 </li>
             </ul>
         </div>
-        <div class="popup" id="popup">
-        <div class="bg" onclick={popupClose}></div>
-        <div class="cont">
-            <span class="close" onclick={popupClose}>x</span>
+        <div className="popup" id="popup">
+        <div className="bg" onClick={popupClose}></div>
+        <div className="cont">
+            <span 
+            className="close" 
+            onClick={popupClose}>
+                x
+            </span>
             <p>
                 랜덤으로 나오는 지하철 호선에
                 <br/>정답을 입력해 주세요~
