@@ -42,9 +42,10 @@ const Game = () => {
         setSubwayLine(subwayLineArray);
         console.log(subwayNMArray);
         console.log(subwayLineArray);
+        
 
         // chkAnswr();
-        // setInterval(timer, 1000);
+        // setInterval(timerStart, 1000);
       } catch (error) {
         console.error('API 호출 중 오류 발생:', error);
       }
@@ -166,6 +167,22 @@ function scoring(scr) {
   }, 1000);
 }
 
+useEffect(() => {
+  let interval;
+
+  // timer가 0보다 큰 경우에만 타이머 설정
+  if (timer > 0) {
+    interval = setInterval(() => {
+      setTimer((prevTimer) => prevTimer - 1);
+    }, 1000);
+  }
+
+  // 컴포넌트가 언마운트될 때 타이머 정리
+  return () => {
+    clearInterval(interval);
+  };
+}, [timer]);
+
   
 
     return (
@@ -183,7 +200,7 @@ function scoring(scr) {
                     <button id="answr_btn" type="submit">제출</button>
                 </form>
                 {/* 타이머 이미지 */}
-                <img id="timer" className="timer" src="./img/timer_10s.png" alt="타이머"/>
+                <img id="timer" className="timer" src={`./img/timer_${timer}s.png`} alt="타이머"/>
             </div>
             {/* 정답, 오답 팝업 */}
             <img className="scoring" id="scoring" src="./img/scoring1.png" alt="채점"/>
