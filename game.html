@@ -14,16 +14,18 @@
         <div class="answr_area">
             <form id="quiz_submit">
                 <label for="subwayName">
-                    <input id="subwayName" type="text" placeholder="">
+                    <!--답안 입력-->
+                    <input id="subwayName" type="text" placeholder="" autocomplete="off">
                 </label>
                 <button>제출</button>
             </form>
+            <!--타이머 이미지-->
+            <img id="timer" class="timer" src="./images/timer_10s.png" alt="타이머"/>
         </div>
+        <!--정답, 오답 팝업-->
+        <img class="scoring" id="scoring" src="./images/scoring1.png" alt="채점"/>
     </div>
-
-
 </div>
-
 </body>
 <script src="./js/game.js" defer></script>
 </html>

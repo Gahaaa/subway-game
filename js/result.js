@@ -24,7 +24,3 @@ const resultImg = document.getElementById('level_img');
 
     }
 })();
-
-
-
-

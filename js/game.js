@@ -72,7 +72,7 @@ function chkAnswr(){
 
         // 문제풀시 타이머 초기화
         setTimeout(clearTime, 1000);
-        if(timerNum === 6){
+        if(timerNum === 10){
             setInterval(timer, 1000);
         }
 
@@ -168,7 +168,7 @@ function timer() {
     }
     timerNum-=1;
     timerImg.src = `./images/timer_${timerNum}s.png`;
-    console.log(timerNum)
+    // console.log(timerNum)
 
 
 }
@@ -193,18 +193,18 @@ function scoring(scr) {
 }
 
 // 새로고침 방지
-function NotReload() {
-    if((event.ctrlKey == true && (event.keyCode == 78 || event.keyCode == 82)) || (event.keyCode == 116) ) {
-        event.keyCode = 0;
-        event.cancelBubble = true;
-        event.returnValue = false;
-    }
-}
-document.onkeydown = NotReload;
+// function NotReload() {
+//     if((event.ctrlKey === true && (event.keyCode === 78 || event.keyCode === 82)) || (event.keyCode === 116) ) {
+//         event.keyCode = 0;
+//         event.cancelBubble = true;
+//         event.returnValue = false;
+//     }
+// }
+// document.onkeydown = NotReload;
 
-window.addEventListener('beforeunload', (event) => {
-    // 표준에 따라 기본 동작 방지
-    event.preventDefault();
-    // Chrome에서는 returnValue 설정이 필요함
-    event.returnValue = '';
-});
+// window.addEventListener('beforeunload', (event) => {
+//     // 표준에 따라 기본 동작 방지
+//     event.preventDefault();
+//     // Chrome에서는 returnValue 설정이 필요함
+//     event.returnValue = '';
+// });
