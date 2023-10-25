@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { Link} from 'react-router-dom';
 import './style.css';
 
 function popupOpen() {
@@ -10,7 +11,22 @@ function popupClose() {
     document.querySelector('#popup').style.display='none';
 }
 
-const Main = () => {
+const Main = ({timerStart, setTimerStart}) => {
+
+    // const handleClick = () => {
+    //     // 특정 URL로 이동
+    //     console.log('hh')
+    //     // window.location.href = '/game';
+
+    //     // setTimerStart(timerStart=> timerStart=true)
+
+    // };
+    function handleClick(){
+        window.location.href = '/game';
+        setTimerStart(timerStart=> timerStart=true)
+        
+    }
+
     return (
         <>
         <div className="main">
@@ -33,9 +49,9 @@ const Main = () => {
 
             <ul className="btn_wrap">
                 <li>
-                    <Link to="/game">
+                    <button onClick={handleClick}>
                         <img className="btn" src="./img/btn_start.png" alt="시작버튼"/>
-                    </Link>
+                    </button>
                     <img className="mice" src="./img/mice.png" alt="시골쥐"/>
                 </li>
                 <li>

@@ -1,10 +1,9 @@
 import './style.css';
 import Result from "./Result";
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-// useNavigate
+import { useEffect, useState } from 'react'; // React를 명시적으로 import하지 않음
+import { Link, useNavigate } from 'react-router-dom';
 
-const Game = () => {
+const Game = ({timerStart,setTimerStart}) => {
   const [subwayNM, setSubwayNM] = useState([]); // 지하철 역 이름을 저장하는 상태
   const [subwayLine, setSubwayLine] = useState([]); // 지하철 라인 번호를 저장하는 상태
   const [randomLine, setRandomLine] = useState(Math.floor(Math.random() * 4+1));//랜덤 문제
@@ -46,6 +45,7 @@ const Game = () => {
 
         // chkAnswr();
         // setInterval(timerStart, 1000);
+        setTimer((timer) => timer=10);
       } catch (error) {
         console.error('API 호출 중 오류 발생:', error);
       }
@@ -167,21 +167,39 @@ function scoring(scr) {
   }, 1000);
 }
 
-useEffect(() => {
-  let interval;
+// 타이머 작업 수정 필요
+// useEffect(() => {
+//   let interval;
 
-  // timer가 0보다 큰 경우에만 타이머 설정
-  if (timer > 0) {
-    interval = setInterval(() => {
-      setTimer((prevTimer) => prevTimer - 1);
-    }, 1000);
-  }
+//   // timer가 0보다 큰 경우에만 타이머 설정
+//   if (timer > 0 && timerStart === true) {
+//     interval = setInterval(() => {
+//       setTimer((prevTimer) => prevTimer - 1);
+//     }, 1000);
+//   }
 
-  // 컴포넌트가 언마운트될 때 타이머 정리
-  return () => {
-    clearInterval(interval);
-  };
-}, [timer]);
+//   // 컴포넌트가 언마운트될 때 타이머 정리
+//   return () => {
+//     clearInterval(interval);
+//     document.querySelector('.quiz_area').style.display = 'none';
+//     document.querySelector('.result').style.display = 'block';
+
+//     setMyQuiz(myQuiz=>myQuiz=0);
+//     setRandomLine(randomLine => randomLine = Math.floor(Math.random() * 4+1));
+//     document.getElementById('subwayName').value = null;
+//   };
+// }, [timer]);
+
+
+// 다시하기
+function retry(){
+    document.querySelector('.quiz_area').style.display = 'block';
+    document.querySelector('.result').style.display = 'none';
+
+    setTimer((prevTimer) => prevTimer=10);
+
+    window.location.href = '/';
+}
 
   
 
@@ -205,7 +223,18 @@ useEffect(() => {
             {/* 정답, 오답 팝업 */}
             <img className="scoring" id="scoring" src="./img/scoring1.png" alt="채점"/>
         </div>
-        <Result myScore={myScore}/>
+        <div className="result">
+            <div>
+                <img id="level_img" className="level_img" src="./img/level1.png" alt="level1"/>
+                <p className="score">
+                    <strong><span id="my_score">{myScore}</span>점</strong>
+                    <span id="result_txt"></span>
+                </p>
+            </div>
+            <button className="retry_btn" onClick={retry}>
+                <img className="level_img" src="./img/retry_btn.png" alt="다시하기"/>
+            </button>
+        </div>
       </>
     );
 };
